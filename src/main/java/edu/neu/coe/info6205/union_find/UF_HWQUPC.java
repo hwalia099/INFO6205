@@ -1,4 +1,3 @@
-/**
  * Original code:
  * Copyright © 2000–2017, Robert Sedgewick and Kevin Wayne.
  * <p>
@@ -78,12 +77,15 @@ public class UF_HWQUPC implements UF {
      * @return the component identifier for the component containing site {@code p}
      * @throws IllegalArgumentException unless {@code 0 <= p < n}
      */
-    public int find(int p) {
-        validate(p);
-        int root = p;
-        // FIXME
-        // END 
-        return root;
+    public int find(int root) {
+        validate(root);
+        int p = root;
+        // TO BE IMPLEMENTED
+        while(p != parent[p]){
+        	doPathCompression(p);
+            p= parent[p];
+        }
+        return p;
     }
 
     /**
@@ -168,16 +170,36 @@ public class UF_HWQUPC implements UF {
     private int count;  // number of components
     private boolean pathCompression;
 
-    private void mergeComponents(int i, int j) {
-        // FIXME make shorter root point to taller one
-        // END 
+    private void mergeComponents(int p, int q) {
+    	 int rootP = find(p);
+         int rootQ = find(q);
+         if (rootP == rootQ) return; 
+         // make root of smaller rank point to root of larger rank
+         if (height[rootP] < height[rootQ]) {updateParent(rootP, rootQ);
+         updateHeight(rootQ, rootP);//parent[rootP] = rootQ;
+         }
+         else if (height[rootQ] < height[rootP])
+         {
+        	 updateParent(rootQ, rootP);
+        	 updateHeight(rootP, rootQ);
+         }
+         else {
+             parent[rootQ] = rootP;
+             height[rootP]++;
+         }
+        // count--;
     }
 
     /**
      * This implements the single-pass path-halving mechanism of path compression
      */
-    private void doPathCompression(int i) {
+    private void doPathCompression(int p) {
         // FIXME update parent to value of grandparent
         // END 
+    	if (pathCompression) {
+            parent[p] = parent[parent[p]];    // path compression by halving
+         //   p = parent[p];
+        }
+       
     }
 }
