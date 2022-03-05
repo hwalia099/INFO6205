@@ -1,4 +1,5 @@
- * Original code:
+/**
+* Original code:
  * Copyright © 2000–2017, Robert Sedgewick and Kevin Wayne.
  * <p>
  * Modifications:
